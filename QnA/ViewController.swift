@@ -15,41 +15,64 @@ class ViewController: UIViewController {
     var questionContainer: UIView!
     var answersContainerView: UIView!
     var progressBar: UIProgressView!
-    var nextScreen: UIButton!
+    var buttonContainer: UIView!
+    
+    var optionOne: SAButton!
+    var optionTwo: SAButton!
+    var optionThree: SAButton!
+    var optionFour: SAButton!
     
     
-    var score   = 0
-    var questionsRemaining  = 1
+    var score                   = 0
+    var questionsRemaining      = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor    = .systemBlue
+        view.backgroundColor    = .systemBackground
         configureLabels()
         configureConstraints()
     }
-
+    
     
     func configureLabels() {
-        scoreLabel                  = UILabel()
-        scoreLabel.font             = UIFont.systemFont(ofSize: 18)
-        scoreLabel.textAlignment    = .right
-        scoreLabel.text             = "Score: \(score)"
+        scoreLabel                          = UILabel()
+        scoreLabel.font                     = UIFont.systemFont(ofSize: 18)
+        scoreLabel.textAlignment            = .right
+        scoreLabel.text                     = "Score: \(score)"
         scoreLabel.translatesAutoresizingMaskIntoConstraints        = false
         view.addSubview(scoreLabel)
         
-        questionContainer           = UIView()
+        questionContainer                   = UIView()
         questionContainer.backgroundColor   = .systemGray
         questionContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(questionContainer)
         
-        qLabel                      = UILabel()
-        qLabel.textAlignment        = .center
-        qLabel.text                 = "Q"
-        qLabel.font                 = UIFont.systemFont(ofSize: 33)
+        optionOne                           = SAButton(title: "None Of The Above")
+        optionTwo                           = SAButton(title: "No Issue")
+        optionThree                         = SAButton(title: "All Of The Above")
+        optionFour                          = SAButton(title: "Compiler Error")
+        
+        buttonContainer                     = UIView()
+//        buttonContainer.backgroundColor     = .systemBrown
+        buttonContainer.translatesAutoresizingMaskIntoConstraints   = false
+        view.addSubview(buttonContainer)
+        buttonContainer.addSubviews(optionOne, optionTwo, optionThree, optionFour)
+        
+        qLabel                              = UILabel()
+        qLabel.textAlignment                = .center
+        qLabel.text                         = "Q"
+        qLabel.font                         = UIFont.systemFont(ofSize: 33)
         qLabel.translatesAutoresizingMaskIntoConstraints            = false
         questionContainer.addSubview(qLabel)
+        
+        progressBar                         = UIProgressView(progressViewStyle: .bar)
+        progressBar.progress                = 0.7
+        progressBar.progressTintColor       = .system
+        progressBar.translatesAutoresizingMaskIntoConstraints       = false
+        view.addSubview(progressBar)
     }
 
+    
     
     
     func configureConstraints() {
@@ -62,6 +85,38 @@ class ViewController: UIViewController {
             questionContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             questionContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             questionContainer.heightAnchor.constraint(equalToConstant: 134),
+            
+            progressBar.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            progressBar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),
+            progressBar.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20),
+            progressBar.heightAnchor.constraint(equalToConstant: 20),
+            
+            buttonContainer.bottomAnchor.constraint(equalTo: progressBar.topAnchor, constant: -20),
+            buttonContainer.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),
+            buttonContainer.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20),
+            buttonContainer.heightAnchor.constraint(equalToConstant: 300),
+            
+            optionOne.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            optionOne.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
+            optionOne.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
+            optionOne.heightAnchor.constraint(equalToConstant: 64),
+            
+            optionTwo.topAnchor.constraint(equalTo: optionOne.bottomAnchor, constant: 8),
+            optionTwo.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
+            optionTwo.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
+            optionTwo.heightAnchor.constraint(equalToConstant: 64),
+            
+            optionThree.topAnchor.constraint(equalTo: optionTwo.bottomAnchor, constant: 8),
+            optionThree.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
+            optionThree.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
+            optionThree.heightAnchor.constraint(equalToConstant: 64),
+            
+            optionFour.topAnchor.constraint(equalTo: optionThree.bottomAnchor, constant: 8),
+            optionFour.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
+            optionFour.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
+            optionFour.heightAnchor.constraint(equalToConstant: 64),
+            
+            
             
             
         ])

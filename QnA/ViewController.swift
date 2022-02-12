@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var quizBrain   = QuizBrain()
 
     var scoreLabel: UILabel!
     var qLabel: UILabel!
@@ -31,7 +33,17 @@ class ViewController: UIViewController {
         view.backgroundColor    = .systemBackground
         configureLabels()
         configureConstraints()
+        updateUI()
     }
+    
+    @objc func updateUI() {
+        questionLabel.text          = quizBrain.getQuestionText()
+        progressBar.progress        = quizBrain.getProgress()
+        quizBrain.getChoices()
+    }
+    
+    
+
     
     
     func configureLabels() {
@@ -46,6 +58,10 @@ class ViewController: UIViewController {
         questionContainer.backgroundColor   = .systemGray
         questionContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(questionContainer)
+        
+        questionLabel                       = UILabel()
+        questionLabel.translatesAutoresizingMaskIntoConstraints     = false
+        questionContainer.addSubview(questionLabel)
         
         optionOne                           = SAButton(title: "None Of The Above")
         optionTwo                           = SAButton(title: "No Issue")
@@ -67,7 +83,7 @@ class ViewController: UIViewController {
         
         progressBar                         = UIProgressView(progressViewStyle: .bar)
         progressBar.progress                = 0.7
-        progressBar.progressTintColor       = .system
+        progressBar.progressTintColor       = .systemFill
         progressBar.translatesAutoresizingMaskIntoConstraints       = false
         view.addSubview(progressBar)
     }
@@ -85,6 +101,11 @@ class ViewController: UIViewController {
             questionContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             questionContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             questionContainer.heightAnchor.constraint(equalToConstant: 134),
+            
+            questionLabel.topAnchor.constraint(equalTo: questionContainer.topAnchor),
+            questionLabel.leadingAnchor.constraint(equalTo: questionContainer.leadingAnchor, constant: 5),
+            questionLabel.trailingAnchor.constraint(equalTo: questionContainer.trailingAnchor, constant: -5),
+            questionLabel.heightAnchor.constraint(equalToConstant: 40),
             
             progressBar.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
             progressBar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),

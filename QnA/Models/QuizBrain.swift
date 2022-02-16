@@ -76,6 +76,7 @@ struct QuizBrain {
     
     func getQuestionText() -> String {
         return quiz[questionNumber].question
+      
     }
     
     func getChoices() -> [Choices] {
@@ -87,6 +88,14 @@ struct QuizBrain {
         Float(questionNumber + 1) / Float(quiz.count)
     }
     
+    func getCo() -> String? {
+        if quiz[questionNumber].code != nil {
+            return quiz[questionNumber].code
+        }else {
+            return nil
+        }
+        
+    }
     
     mutating func nextQuestion() {
         if questionNumber < quiz.count - 1 {

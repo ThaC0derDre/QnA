@@ -133,7 +133,9 @@ class ViewController: UIViewController {
         questionCode                        = UILabel()
         questionCode.text                   = nil
         questionCode.numberOfLines          = 0
-        //        questionCode.backgroundColor        = .systemGreen
+        questionCode.minimumScaleFactor     = 0.90
+        questionCode.adjustsFontSizeToFitWidth  = true
+//                questionCode.backgroundColor        = .systemGreen
         questionCode.font                   = UIFont(name: "Menlo", size: 20)
         questionCode.translatesAutoresizingMaskIntoConstraints  = false
         questionContainer.addSubviews(questionLabel, questionCode)
@@ -154,13 +156,6 @@ class ViewController: UIViewController {
         view.addSubview(buttonContainer)
         buttonContainer.addSubviews(optionOne, optionTwo, optionThree, optionFour)
         
-        //        qLabel                              = UILabel()
-        //        qLabel.textAlignment                = .left
-        //        qLabel.text                         = "Q"
-        //        qLabel.font                         = UIFont.systemFont(ofSize: 33)
-        //        qLabel.translatesAutoresizingMaskIntoConstraints            = false
-        //        questionContainer.addSubview(qLabel)
-        
         progressBar                         = UIProgressView(progressViewStyle: .bar)
         progressBar.progress                = 0.7
         progressBar.progressTintColor       = .systemFill
@@ -178,18 +173,18 @@ class ViewController: UIViewController {
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -5),
             
             questionContainer.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 30),
-            questionContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            questionContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            questionContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            questionContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             questionContainer.heightAnchor.constraint(equalToConstant: 350),
             
             questionLabel.topAnchor.constraint(equalTo: questionContainer.topAnchor),
-            questionLabel.leadingAnchor.constraint(equalTo: questionContainer.leadingAnchor, constant: 5),
-            questionLabel.trailingAnchor.constraint(equalTo: questionContainer.trailingAnchor, constant: -5),
+            questionLabel.leadingAnchor.constraint(equalTo: questionContainer.leadingAnchor),
+            questionLabel.trailingAnchor.constraint(equalTo: questionContainer.trailingAnchor),
             questionLabel.heightAnchor.constraint(equalToConstant: 90),
             
             questionCode.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 10),
-            questionCode.leadingAnchor.constraint(equalTo: questionContainer.leadingAnchor, constant: 10),
-            questionCode.trailingAnchor.constraint(equalTo: questionContainer.trailingAnchor, constant: -10),
+            questionCode.leadingAnchor.constraint(equalTo: questionContainer.leadingAnchor),
+            questionCode.trailingAnchor.constraint(equalTo: questionContainer.trailingAnchor),
             questionCode.bottomAnchor.constraint(equalTo: questionContainer.bottomAnchor),
             
             progressBar.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),

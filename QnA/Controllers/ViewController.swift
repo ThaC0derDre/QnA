@@ -10,9 +10,9 @@ import UIKit
 class ViewController: UIViewController {
     
     var quizBrain       = QuizBrain()
-
+    
     var scoreLabel: UILabel!
-//    var qLabel: UILabel!
+    //    var qLabel: UILabel!
     var questionLabel: UILabel!
     var questionCode: UILabel!
     var questionContainer: UIView!
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         updateUI()
     }
     
-    @objc func updateUI() {
+    func updateUI() {
         questionLabel.text              = quizBrain.getQuestionText()
         progressBar.progress            = quizBrain.getProgress()
         
@@ -52,10 +52,62 @@ class ViewController: UIViewController {
     }
     
     
-
-   @objc func buttonPressed() {
-       print("Tapped")
+    
+    @objc func buttonOnePressed() {
+        guard let userAnswer  = optionOne.titleLabel?.text else { fatalError("Error grabbing title from button")}
+        if quizBrain.correctAnswer(userAnswer) {
+            score += 1
+        }
+        else {
+            print ("Incorrect!")
+            //capture this Question to suggest review
+        }
+        quizBrain.nextQuestion()
+        updateUI()
     }
+    
+    
+    
+    @objc func buttonTwoPressed() {
+        guard let userAnswer  = optionTwo.titleLabel?.text else { fatalError("Error grabbing title from button")}
+        if quizBrain.correctAnswer(userAnswer) {
+            score += 1
+        }
+        else {
+            print ("Incorrect!")
+        }
+        quizBrain.nextQuestion()
+        updateUI()
+    }
+    
+    
+    @objc func buttonThreePressed() {
+        guard let userAnswer  = optionThree.titleLabel?.text else { fatalError("Error grabbing title from button")}
+        if quizBrain.correctAnswer(userAnswer) {
+            score += 1
+        }
+        else {
+            print ("Incorrect!")
+        }
+        quizBrain.nextQuestion()
+        updateUI()
+    }
+    
+    
+    
+    @objc func buttonFourPressed() {
+        guard let userAnswer  = optionFour.titleLabel?.text else { fatalError("Error grabbing title from button")}
+        if quizBrain.correctAnswer(userAnswer) {
+            score += 1
+        }
+        else {
+            print ("Incorrect!")
+        }
+        quizBrain.nextQuestion()
+        updateUI()
+    }
+    
+    
     
     func configureLabels() {
         scoreLabel                          = UILabel()
@@ -66,47 +118,48 @@ class ViewController: UIViewController {
         view.addSubview(scoreLabel)
         
         questionContainer                   = UIView()
-        questionContainer.backgroundColor   = .systemGray
+        //        questionContainer.backgroundColor   = .systemGray
         questionContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(questionContainer)
         
         questionLabel                       = UILabel()
-        questionLabel.font                  = UIFont(name: "Helvetica Neue", size: 30)
+        questionLabel.font                  = UIFont(name: "Helvetica Neue", size: 24)
         questionLabel.numberOfLines         = 0
         questionLabel.lineBreakMode         = .byWordWrapping
-        questionLabel.backgroundColor       = .systemPink
+        //        questionLabel.backgroundColor       = .systemPink
         questionLabel.translatesAutoresizingMaskIntoConstraints     = false
         
         
         questionCode                        = UILabel()
         questionCode.text                   = nil
-        questionCode.backgroundColor        = .systemGreen
+        questionCode.numberOfLines          = 0
+        //        questionCode.backgroundColor        = .systemGreen
         questionCode.font                   = UIFont(name: "Menlo", size: 20)
         questionCode.translatesAutoresizingMaskIntoConstraints  = false
         questionContainer.addSubviews(questionLabel, questionCode)
         
         
         optionOne                           = SAButton(title: "None Of The Above")
-        optionOne.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        optionOne.addTarget(self, action: #selector(buttonOnePressed), for: .touchUpInside)
         optionTwo                           = SAButton(title: "No Issue")
-        optionTwo.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        optionTwo.addTarget(self, action: #selector(buttonTwoPressed), for: .touchUpInside)
         optionThree                         = SAButton(title: "All Of The Above")
-        optionThree.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        optionThree.addTarget(self, action: #selector(buttonThreePressed), for: .touchUpInside)
         optionFour                          = SAButton(title: "Compiler Error")
-        optionFour.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        optionFour.addTarget(self, action: #selector(buttonFourPressed), for: .touchUpInside)
         
         buttonContainer                     = UIView()
-//        buttonContainer.backgroundColor     = .systemBrown
+        //        buttonContainer.backgroundColor     = .systemBrown
         buttonContainer.translatesAutoresizingMaskIntoConstraints   = false
         view.addSubview(buttonContainer)
         buttonContainer.addSubviews(optionOne, optionTwo, optionThree, optionFour)
         
-//        qLabel                              = UILabel()
-//        qLabel.textAlignment                = .left
-//        qLabel.text                         = "Q"
-//        qLabel.font                         = UIFont.systemFont(ofSize: 33)
-//        qLabel.translatesAutoresizingMaskIntoConstraints            = false
-//        questionContainer.addSubview(qLabel)
+        //        qLabel                              = UILabel()
+        //        qLabel.textAlignment                = .left
+        //        qLabel.text                         = "Q"
+        //        qLabel.font                         = UIFont.systemFont(ofSize: 33)
+        //        qLabel.translatesAutoresizingMaskIntoConstraints            = false
+        //        questionContainer.addSubview(qLabel)
         
         progressBar                         = UIProgressView(progressViewStyle: .bar)
         progressBar.progress                = 0.7
@@ -114,7 +167,7 @@ class ViewController: UIViewController {
         progressBar.translatesAutoresizingMaskIntoConstraints       = false
         view.addSubview(progressBar)
     }
-
+    
     
     
     
@@ -145,8 +198,8 @@ class ViewController: UIViewController {
             progressBar.heightAnchor.constraint(equalToConstant: 20),
             
             buttonContainer.bottomAnchor.constraint(equalTo: progressBar.topAnchor),
-            buttonContainer.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),
-            buttonContainer.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20),
+            buttonContainer.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 5),
+            buttonContainer.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -5),
             buttonContainer.heightAnchor.constraint(equalToConstant: 300),
             
             optionOne.topAnchor.constraint(equalTo: buttonContainer.topAnchor),

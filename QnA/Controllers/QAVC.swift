@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class QAVC: UIViewController {
     
     var quizBrain       = QuizBrain()
     
@@ -51,60 +51,48 @@ class ViewController: UIViewController {
         
     }
     
-    
-    
-    @objc func buttonOnePressed() {
-        guard let userAnswer  = optionOne.titleLabel?.text else { fatalError("Error grabbing title from button")}
+    func processAnswer(_ userAnswer:String) {
         if quizBrain.correctAnswer(userAnswer) {
             score += 1
         }
         else {
             print ("Incorrect!")
-            //capture this Question to suggest review
         }
-        quizBrain.nextQuestion()
-        updateUI()
+        if score == 1 {
+            let vc = ScoreVC()
+            vc.modalPresentationStyle   = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+            
+        } else {
+            quizBrain.nextQuestion()
+            updateUI()
+        }
+    }
+    
+    @objc func buttonOnePressed() {
+        guard let userAnswer  = optionOne.titleLabel?.text else { fatalError("Error grabbing title from button")}
+        processAnswer(userAnswer)
     }
     
     
     
     @objc func buttonTwoPressed() {
         guard let userAnswer  = optionTwo.titleLabel?.text else { fatalError("Error grabbing title from button")}
-        if quizBrain.correctAnswer(userAnswer) {
-            score += 1
-        }
-        else {
-            print ("Incorrect!")
-        }
-        quizBrain.nextQuestion()
-        updateUI()
+        processAnswer(userAnswer)
     }
     
     
     @objc func buttonThreePressed() {
         guard let userAnswer  = optionThree.titleLabel?.text else { fatalError("Error grabbing title from button")}
-        if quizBrain.correctAnswer(userAnswer) {
-            score += 1
-        }
-        else {
-            print ("Incorrect!")
-        }
-        quizBrain.nextQuestion()
-        updateUI()
+        
+        processAnswer(userAnswer)
     }
     
     
     
     @objc func buttonFourPressed() {
         guard let userAnswer  = optionFour.titleLabel?.text else { fatalError("Error grabbing title from button")}
-        if quizBrain.correctAnswer(userAnswer) {
-            score += 1
-        }
-        else {
-            print ("Incorrect!")
-        }
-        quizBrain.nextQuestion()
-        updateUI()
+        processAnswer(userAnswer)
     }
     
     
@@ -216,10 +204,6 @@ class ViewController: UIViewController {
             optionFour.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
             optionFour.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
             optionFour.heightAnchor.constraint(equalToConstant: 64),
-            
-            
-            
-            
         ])
     }
 }

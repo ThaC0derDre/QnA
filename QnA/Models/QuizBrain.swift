@@ -9,6 +9,13 @@ import Foundation
 
 struct QuizBrain {
     
+    var shuffledQs          = [String]()
+    var correctA            = [String]()
+    var choices             = [Choices]()
+    var codeText            = [String?]()
+    var questionNumber      = 0
+    var endOfQuiz           = false
+    
     // Replace '^' with '/('
     let quiz = [
         Quiz(q: "What is this code an example of?", co: "let val = (Double)6", ch: [Choices(one: "a syntax issue", two: "typecasting", three: "assignment", four: "initialization")], a: "a syntax issue"),
@@ -28,7 +35,6 @@ struct QuizBrain {
         Quiz(q: "When a function takes a closure as a parameter, when do you want to mark it as escaping?", co: nil, ch: [Choices(one: "when it's executed after the function returns", two: "when it's scope is undefined", three: "when it's lazy loaded", four: "all of these answers")], a: "when it's executed after the function returns"),
         Quiz(q: "What's wrong with this code?", co: "class Person {\nvar name: String\nvar address: String\n}", ch: [Choices(one: "Person has no initializers.", two: "Person has no base class.", three: "var name is not formatted correctly.", four: "address is a keyword.")], a: "Person has no initializers."),
         Quiz(q: "What is the value of names after this code is executed?", co: "let names = [“Bear“, “Joe“, “Clark“]\nnames.map { (s) -> String in\nreturn s.uppercased()\n}", ch: [Choices(one: "[“BEAR“, “JOE“, “CLARK“]", two: "[“B“, “J“, “C“]", three: "Person has no initializers.", four: "This code contains an error.")], a: "Person has no initializers."),
-        
         Quiz(q: "What describes this line of code?", co: "let val = 5", ch: [Choices(one: "a constant named val of type Int", two: "a variable named val of type item", three: "a constant named val of type Number", four: "a variable named val of type Int")], a: "a constant named val of type Int"),
         Quiz(q: "didSet and willSet are examples of _?", co: nil, ch: [Choices(one: "property observers", two: "key properties", three: "all of these answers", four: "newOld value calls")], a: "property observers"),
         Quiz(q: "What is wrong with this code?", co: "self.callback = {\n self.attempts += 1\nself.downloadFailed()\n}", ch: [Choices(one: "Use of self inside the closure causes retain cycle.", two: "You cannot assign a value to closure in this manner.", three: "You need to define the type of closure explicitly.", four: "There is nothing wrong with this code.")], a: "Use of self inside the closure causes retain cycle."),
@@ -41,15 +47,22 @@ struct QuizBrain {
         Quiz(q: "How many times will this loop be executed?", co: "for i in 0...100 {\n print(i)\n}", ch: [Choices(one: "0", two: "101", three: "99", four: "100")], a: "101"),
         Quiz(q: "What can AnyObject represent?", co: nil, ch: [Choices(one: "an instance of any class", two: "an instance of function type", three: "all of these answers", four: "an instance of an optional type")], a: "all of these answers"),
     ]
-        
-         
+   
     
-    var questionNumber  = 0
+    mutating func createQuiz() {
+        let shuffleQuiz     = quiz.shuffled()
+        for i in 1...15 {
+            shuffledQs.append(shuffleQuiz[i].question)
+            correctA.append(shuffleQuiz[i].answer)
+            choices.append(contentsOf: shuffleQuiz[i].choices)
+            codeText.append(shuffleQuiz[i].code)
+        }
+    }
     
     
     mutating func correctAnswer(_ userAnswer: String) -> Bool {
         
-        if quiz[questionNumber].answer  == userAnswer {
+        if correctA[questionNumber]  == userAnswer {
             return true
         }else {
             return false
@@ -58,22 +71,22 @@ struct QuizBrain {
     
     
     func getQuestionText() -> String {
-        return quiz[questionNumber].question
+        return shuffledQs[questionNumber]
       
     }
     
-    func getChoices() -> [Choices] {
-        return quiz[questionNumber].choices
+    func getChoices() -> Choices {
+        return choices[questionNumber]
     }
     
     
     func getProgress() -> Float {
-        Float(questionNumber + 1) / Float(quiz.count)
+        Float(questionNumber + 1) / Float(shuffledQs.count)
     }
     
     func getCo() -> String? {
-        if quiz[questionNumber].code != nil {
-            return quiz[questionNumber].code
+        if codeText[questionNumber] != nil {
+            return codeText[questionNumber]
         }else {
             return nil
         }
@@ -81,10 +94,11 @@ struct QuizBrain {
     }
     
     mutating func nextQuestion() {
-        if questionNumber < quiz.count - 1 {
+        if questionNumber < shuffledQs.count - 2 {
             questionNumber  += 1
         }else {
-            questionNumber   =   0
+            questionNumber += 1
+            endOfQuiz   = true
         }
     }
 }

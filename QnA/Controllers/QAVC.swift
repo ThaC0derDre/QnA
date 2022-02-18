@@ -32,9 +32,11 @@ class QAVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor    = .systemBackground
+        quizBrain.createQuiz()
         configureLabels()
         configureConstraints()
         updateUI()
+        
     }
     
     func updateUI() {
@@ -42,10 +44,10 @@ class QAVC: UIViewController {
         progressBar.progress            = quizBrain.getProgress()
         
         let choiceArray                 = quizBrain.getChoices()
-        optionOne.setTitle(choiceArray[0].optionOne, for: .normal)
-        optionTwo.setTitle(choiceArray[0].optionTwo, for: .normal)
-        optionThree.setTitle(choiceArray[0].optionThree, for: .normal)
-        optionFour.setTitle(choiceArray[0].optionFour, for: .normal)
+        optionOne.setTitle(choiceArray.optionOne, for: .normal)
+        optionTwo.setTitle(choiceArray.optionTwo, for: .normal)
+        optionThree.setTitle(choiceArray.optionThree, for: .normal)
+        optionFour.setTitle(choiceArray.optionFour, for: .normal)
         
         questionCode.text               = quizBrain.getCo()
         
@@ -58,9 +60,10 @@ class QAVC: UIViewController {
         else {
             print ("Incorrect!")
         }
-        if score == 1 {
+        if quizBrain.endOfQuiz {
             let vc = ScoreVC()
             vc.modalPresentationStyle   = .fullScreen
+            vc.score   = score
             self.present(vc, animated: true, completion: nil)
             
         } else {

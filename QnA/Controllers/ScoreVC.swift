@@ -11,6 +11,7 @@ class ScoreVC: UIViewController {
     
     var scoreLabel: UILabel!
     var assessmentLabel: UILabel!
+    var score: Int!
     
     
     
@@ -27,13 +28,13 @@ class ScoreVC: UIViewController {
     
     func configureLabels() {
         scoreLabel              = UILabel()
-        scoreLabel.text         = "Score: 14/15 Correct!"
+        scoreLabel.text         = "Score: \(score!)/15 Correct!"
         scoreLabel.translatesAutoresizingMaskIntoConstraints    = false
         
         
         assessmentLabel         = UILabel()
         assessmentLabel.lineBreakMode   = .byWordWrapping
-        assessmentLabel.text    = "You have proved to be professiant in Swift!"
+        assessmentLabel.text    = "You have proved to be proficiant in Swift!"
         assessmentLabel.translatesAutoresizingMaskIntoConstraints   = false
         view.addSubviews(scoreLabel, assessmentLabel)
         
